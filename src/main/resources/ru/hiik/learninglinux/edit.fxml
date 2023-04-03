@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="740.0" style="-fx-background-color: #dddddd;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.hiik.learninglinux.EditController">
+   <children>
+      <Button layoutX="25.0" layoutY="544.0" mnemonicParsing="false" onAction="#switchToPrimary" text="На главную" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" />
+      <AnchorPane layoutX="140.0" layoutY="95.0" prefHeight="524.0" prefWidth="740.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <tabs>
+                <Tab text="Теория">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane fx:id="llhSelector" layoutY="113.0" prefHeight="43.0" prefWidth="740.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#createLlh" text="Создать файл" GridPane.halignment="CENTER" />
+                                    <Button mnemonicParsing="false" onAction="#selectLlh" prefHeight="24.0" prefWidth="265.0" text="Выбрать файл для редактирования" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Button mnemonicParsing="false" onAction="#removeLlh" text="Удалить файл" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                 </children>
+                              </GridPane>
+                              <GridPane fx:id="llhEditor" layoutY="63.0" prefHeight="430.0" prefWidth="740.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="396.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TextArea fx:id="llhEditorText" prefHeight="200.0" prefWidth="200.0" />
+                                    <Button mnemonicParsing="false" onAction="#preview" text="Предпросмотр" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <WebView fx:id="llhEditorRenderer" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#saveLlh" text="Сохранить" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" onAction="#cancelLlh" text="Отмена" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Тесты">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane fx:id="lleSelector" prefHeight="43.0" prefWidth="740.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#createLle" text="Создать файл" GridPane.halignment="CENTER" />
+                                    <Button mnemonicParsing="false" onAction="#selectLle" prefHeight="24.0" prefWidth="265.0" text="Выбрать файл для редактирования" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Button mnemonicParsing="false" onAction="#removeLle" text="Удалить файл" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                 </children>
+                              </GridPane>
+                              <GridPane fx:id="lleEditor" layoutX="14.0" layoutY="91.0" prefHeight="430.0" prefWidth="740.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints prefHeight="34.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="330.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="82.0" minHeight="34.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <GridPane prefHeight="24.0" prefWidth="284.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="70.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" prefWidth="684.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Вопрос:" />
+                                          <TextField fx:id="questionField" GridPane.columnIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane GridPane.rowIndex="1">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="718.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <CheckBox fx:id="cb1" mnemonicParsing="false" />
+                                          <TextField fx:id="answer1" GridPane.columnIndex="1" />
+                                          <CheckBox fx:id="cb2" mnemonicParsing="false" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cb3" mnemonicParsing="false" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cb4" mnemonicParsing="false" GridPane.rowIndex="3" />
+                                          <TextField fx:id="answer2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="answer3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="answer4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane GridPane.rowIndex="2">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#saveLle" text="Сохранить" GridPane.halignment="CENTER" />
+                                          <Button mnemonicParsing="false" onAction="#nextQuestion" text="Следующий вопрос" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Button mnemonicParsing="false" onAction="#cancelLle" text="Отмена" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Изображения">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab fx:id="pass" onSelectionChanged="#passwordWarning" text="Сменить пароль">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane layoutX="156.0" layoutY="140.0" prefHeight="213.0" prefWidth="429.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="220.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="561.0" minWidth="10.0" prefWidth="500.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Старый пароль:" GridPane.halignment="RIGHT" />
+                                    <Label text="Новый пароль" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Label text="Повторите ввод нового пароля:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                    <PasswordField fx:id="oldPass" GridPane.columnIndex="1" />
+                                    <PasswordField fx:id="newPass" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <PasswordField fx:id="newPassAgain" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#changePassword" text="Сменить пароль" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <ProgressIndicator fx:id="progressIndicator" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                    <Label fx:id="progressInfo" text="Идет перешифрование файлов" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
