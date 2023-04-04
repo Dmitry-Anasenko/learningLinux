@@ -22,6 +22,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -71,6 +73,12 @@ public class EditController extends Thread implements Initializable {
     private CheckBox cb4;
     @FXML
     private TextField answer4;
+    @FXML
+    private GridPane imageSelector;
+    @FXML
+    private GridPane imageViewer;
+    @FXML
+    private ImageView imagePreview;
     @FXML
     private PasswordField oldPass;
     @FXML
@@ -377,6 +385,70 @@ public class EditController extends Thread implements Initializable {
         lleSelector.setVisible(true);
         bufferToRead = null;
         scanner = null;
+    }
+    
+    @FXML
+    private void addImage() {
+        try {
+            openedFile = null;
+            File home = new File(System.getProperty("user.home"));
+            fileChooser.setInitialDirectory(home);
+            openedFile = fileChooser.showOpenDialog(App.stg);
+            if (openedFile == null)
+                return;
+            imageSelector.setVisible(false);
+            imageViewer.setVisible(true);
+            Image image = new Image(FileManager.getImage(openedFile));
+            imagePreview.setImage(image);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void removeImage() {
+        fileChooser.setInitialDirectory(FileManager.getImages());
+        File file = fileChooser.showOpenDialog(App.stg);
+        if (file == null)
+            return;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Удалить файл?");
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == null  || option.get() == ButtonType.CANCEL)
+            return;
+        else if (option.get() == ButtonType.OK) {
+            FileManager.removeImage(file.getName());
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setContentText("Файл удален");
+            info.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void saveImage() {
+        try {
+            fileChooser.setInitialDirectory(FileManager.getImages());
+            File dest = fileChooser.showSaveDialog(App.stg);
+            if (dest == null)
+                return;
+            FileManager.addOrReplaceImage(openedFile, dest.getName());
+            openedFile = null;
+            imageViewer.setVisible(false);
+            imageSelector.setVisible(true);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void cancelImage() {
+        openedFile = null;
+        imageViewer.setVisible(false);
+        imageSelector.setVisible(true);
     }
     
     @FXML

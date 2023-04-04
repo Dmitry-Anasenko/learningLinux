@@ -31,11 +31,11 @@ public class FileManager {
     // Определяет разделитель в файловой системе
     private static final String separator = System.getProperty("file.separator");
     // Инициализация каталога с теорией
-    private static final File theory = new File(path + separator + "theory" + separator);
+    private static final File theory = new File(path + separator + "theory");
     // Инициализация каталога с тестами
-    private static final File tests = new File(path + separator + "tests" + separator);
+    private static final File tests = new File(path + separator + "tests");
     // Инициализация каталога с изображениями
-    private static final File images = new File(path + separator + "images" + separator);
+    private static final File images = new File(path + separator + "images");
     // Инициализация файла конфигурации
     private static final File config = new File(path + separator + "config.llc");
     
@@ -186,23 +186,20 @@ public class FileManager {
      */
     public static void addOrReplaceImage(File src, String fileName) throws FileNotFoundException,
             IOException {
-        File dest = new File(images + fileName);
+        File dest = new File(images + separator + fileName);
         copyFile(src, dest);
     }
     
     /**
      * Получение изображения из указанного файла
-     * @param fileName Имя файла для чтения
-     * @return Изображение в виде массива байтов
+     * @param file Изображение в виде файла
+     * @return Изображение в виде файлового потока
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public static byte[] getImage(String fileName) throws FileNotFoundException, IOException {
-        File file = new File(images + fileName);
-        InputStream is = new FileInputStream(tests);
-        byte[] buffer = is.readAllBytes();
-        is.close();
-        return buffer;
+    public static InputStream getImage(File file) throws FileNotFoundException, IOException {
+        InputStream is = new FileInputStream(file);
+        return is;
     }
     
     /**
@@ -210,7 +207,7 @@ public class FileManager {
      * @param fileName Имя файла для удаления
      */
     public static void removeImage(String fileName) {
-        File file = new File(images + fileName);
+        File file = new File(images + separator + fileName);
         removeFile(file);
     }
     
