@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,7 +36,7 @@ public class FileManager {
     // Инициализация каталога с тестами
     private static final File tests = new File(path + separator + "tests");
     // Инициализация каталога с изображениями
-    private static final File images = new File(path + separator + "images");
+    private static final File images = new File(theory + separator + "images");
     // Инициализация файла конфигурации
     private static final File config = new File(path + separator + "config.llc");
     
@@ -166,7 +167,12 @@ public class FileManager {
      * @return Массив файлов с теорией
      */
     public static File[] getLlhs() {
-        return theory.listFiles();
+        File[] llhs = theory.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".llh");
+            }
+        });
+        return llhs;
     }
     
     /**
@@ -218,10 +224,9 @@ public class FileManager {
      * @throws InvalidKeySpecException
      */
     public static void firstRun() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        if ((!theory.exists()) || (!theory.exists()) || (!config.exists())) {
+        if ((!theory.exists()) || (!tests.exists()) || (!config.exists())) {
             deleteDirectory(theory);
             deleteDirectory(tests);
-            deleteDirectory(images);
             config.delete();
             // Создание каталогов с теорией и тестами и конфигурационного файла
             theory.mkdir();
@@ -234,7 +239,7 @@ public class FileManager {
                     .getKeyFromPassword("LinuxIsThePower", "07041969"));
             String iv = CryptoManager.convertIvToString(CryptoManager.generateIv());
             String configContent =  key + "\n" + iv;
-            writeFile(config, configContent);
+            writeLlc(configContent);
         }
     }
     

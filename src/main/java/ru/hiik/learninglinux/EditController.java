@@ -181,7 +181,12 @@ public class EditController extends Thread implements Initializable {
     private void saveLlh() {
         try {
             if (llhEditorText.getText() == null) {
-                if (openedFile != null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Текстовое поле не заполнено");
+                alert.showAndWait();
+                return;
+            }
+            if (openedFile != null) {
                     FileManager.createOrEditLlh(openedFile.getName(), llhEditorText.getText(),
                             key, iv);
                     openedFile = null;
@@ -199,12 +204,6 @@ public class EditController extends Thread implements Initializable {
                 webEngine.load(null);
                 llhEditor.setVisible(false);
                 llhSelector.setVisible(true);
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Текстовое поле не заполнено");
-                alert.showAndWait();
-            }
         }
         catch (IOException | NoSuchPaddingException | NoSuchAlgorithmException |
                 BadPaddingException | InvalidAlgorithmParameterException |
