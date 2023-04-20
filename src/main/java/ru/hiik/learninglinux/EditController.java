@@ -94,8 +94,12 @@ public class EditController extends Thread implements Initializable {
     // Данные для шифрования и дешифрования
     private SecretKey key;
     private IvParameterSpec iv;
-    // Открытый файл
-    private File openedFile;
+    // Открытый файл llh
+    private File openedLlh;
+    // Открытый файл lle
+    private File openedLle;
+    // Открытый файл с изображением
+    private File openedImage;
     
     private WebEngine webEngine;
     // Буфер для записи тестов в файл
@@ -131,14 +135,14 @@ public class EditController extends Thread implements Initializable {
     @FXML
     private void selectLlh() {
         try {
-            openedFile = null;
+            openedLlh = null;
             fileChooser.setInitialDirectory(FileManager.getTheory());
-            openedFile = fileChooser.showOpenDialog(App.stg);
-            if (openedFile == null)
+            openedLlh = fileChooser.showOpenDialog(App.stg);
+            if (openedLlh == null)
                 return;
             llhSelector.setVisible(false);
             llhEditor.setVisible(true);
-            llhEditorText.setText(FileManager.readLlh(openedFile.getName(), key, iv));
+            llhEditorText.setText(FileManager.readLlh(openedLlh, key, iv));
         } catch (FileNotFoundException | NoSuchPaddingException | NoSuchAlgorithmException |
                 InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException |
                 IllegalBlockSizeException ex) {
@@ -150,10 +154,10 @@ public class EditController extends Thread implements Initializable {
     
     @FXML
     private void removeLlh() {
-        openedFile = null;
+        openedLlh = null;
         fileChooser.setInitialDirectory(FileManager.getTheory());
-        openedFile = fileChooser.showOpenDialog(App.stg);
-        if (openedFile == null)
+        openedLlh = fileChooser.showOpenDialog(App.stg);
+        if (openedLlh == null)
             return;
         else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -163,7 +167,7 @@ public class EditController extends Thread implements Initializable {
                 return;
             }
             else if (option.get() == ButtonType.OK) {
-                FileManager.removeLlh(openedFile.getName());
+                FileManager.removeLlh(openedLlh);
                 Alert info = new Alert(Alert.AlertType.INFORMATION);
                 info.setContentText("Файл удален");
                 info.showAndWait();
@@ -186,19 +190,19 @@ public class EditController extends Thread implements Initializable {
                 alert.showAndWait();
                 return;
             }
-            if (openedFile != null) {
-                    FileManager.createOrEditLlh(openedFile.getName(), llhEditorText.getText(),
+            if (openedLlh != null) {
+                    FileManager.createOrEditLlh(openedLlh, llhEditorText.getText(),
                             key, iv);
-                    openedFile = null;
+                    openedLlh = null;
                 }
                 else {
                     fileChooser.setInitialDirectory(FileManager.getTheory());
-                    openedFile = fileChooser.showSaveDialog(App.stg);
-                    if (openedFile == null)
+                    openedLlh = fileChooser.showSaveDialog(App.stg);
+                    if (openedLlh == null)
                         return;
-                    FileManager.createOrEditLlh(openedFile.getName(), llhEditorText.getText(),
+                    FileManager.createOrEditLlh(openedLlh, llhEditorText.getText(),
                             key, iv);
-                    openedFile = null;
+                    openedLlh = null;
                 }
                 llhEditorText.setText(null);
                 webEngine.load(null);
@@ -231,12 +235,12 @@ public class EditController extends Thread implements Initializable {
     @FXML
     private void selectLle() {
         try {
-            openedFile = null;
+            openedLle = null;
             fileChooser.setInitialDirectory(FileManager.getTests());
-            openedFile = fileChooser.showOpenDialog(App.stg);
-            if (openedFile == null)
+            openedLle = fileChooser.showOpenDialog(App.stg);
+            if (openedLle == null)
                 return;
-            bufferToRead = FileManager.readLle(openedFile.getName(), key, iv);
+            bufferToRead = FileManager.readLle(openedLle, key, iv);
             scanner = new Scanner(bufferToRead);
             lleSelector.setVisible(false);
             lleEditor.setVisible(true);
@@ -252,10 +256,10 @@ public class EditController extends Thread implements Initializable {
     
     @FXML
     private void removeLle() {
-        openedFile = null;
+        openedLle = null;
         fileChooser.setInitialDirectory(FileManager.getTests());
-        openedFile = fileChooser.showOpenDialog(App.stg);
-        if (openedFile == null)
+        openedLle = fileChooser.showOpenDialog(App.stg);
+        if (openedLle == null)
             return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Удалить файл?");
@@ -263,7 +267,7 @@ public class EditController extends Thread implements Initializable {
         if (option.get() == null  || option.get() == ButtonType.CANCEL)
             return;
         else if (option.get() == ButtonType.OK) {
-            FileManager.removeLle(openedFile.getName());
+            FileManager.removeLle(openedLle);
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setContentText("Файл удален");
             info.showAndWait();
@@ -275,17 +279,17 @@ public class EditController extends Thread implements Initializable {
         try {
             if (nextQuestion()) {
                 bufferToWrite = bufferToWrite.substring(0, bufferToWrite.length() - 1);
-                if (openedFile != null) {
-                    FileManager.createOrEditLle(openedFile.getName(), bufferToWrite, key, iv);
-                    openedFile = null;
+                if (openedLle != null) {
+                    FileManager.createOrEditLle(openedLle, bufferToWrite, key, iv);
+                    openedLle = null;
                 }
                 else {
                     fileChooser.setInitialDirectory(FileManager.getTests());
-                    openedFile = fileChooser.showSaveDialog(App.stg);
-                    if (openedFile == null)
+                    openedLle = fileChooser.showSaveDialog(App.stg);
+                    if (openedLle == null)
                         return;
-                    FileManager.createOrEditLle(openedFile.getName(), bufferToWrite, key, iv);
-                    openedFile = null;
+                    FileManager.createOrEditLle(openedLle, bufferToWrite, key, iv);
+                    openedLle = null;
                 }
                 questionField.setText(null);
                 answer1.setText(null);
@@ -389,15 +393,15 @@ public class EditController extends Thread implements Initializable {
     @FXML
     private void addImage() {
         try {
-            openedFile = null;
+            openedImage = null;
             File home = new File(System.getProperty("user.home"));
             fileChooser.setInitialDirectory(home);
-            openedFile = fileChooser.showOpenDialog(App.stg);
-            if (openedFile == null)
+            openedImage = fileChooser.showOpenDialog(App.stg);
+            if (openedImage == null)
                 return;
             imageSelector.setVisible(false);
             imageViewer.setVisible(true);
-            Image image = new Image(FileManager.getImage(openedFile));
+            Image image = new Image(FileManager.getImage(openedImage));
             imagePreview.setImage(image);
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -418,7 +422,7 @@ public class EditController extends Thread implements Initializable {
         if (option.get() == null  || option.get() == ButtonType.CANCEL)
             return;
         else if (option.get() == ButtonType.OK) {
-            FileManager.removeImage(file.getName());
+            FileManager.removeImage(file);
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setContentText("Файл удален");
             info.showAndWait();
@@ -432,8 +436,8 @@ public class EditController extends Thread implements Initializable {
             File dest = fileChooser.showSaveDialog(App.stg);
             if (dest == null)
                 return;
-            FileManager.addOrReplaceImage(openedFile, dest.getName());
-            openedFile = null;
+            FileManager.addOrReplaceImage(openedImage, dest);
+            openedImage = null;
             imageViewer.setVisible(false);
             imageSelector.setVisible(true);
         } catch (IOException ex) {
@@ -445,7 +449,7 @@ public class EditController extends Thread implements Initializable {
     
     @FXML
     private void cancelImage() {
-        openedFile = null;
+        openedImage = null;
         imageViewer.setVisible(false);
         imageSelector.setVisible(true);
     }

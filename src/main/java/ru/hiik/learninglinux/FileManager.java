@@ -42,7 +42,7 @@ public class FileManager {
     
     /**
      * Создание или редактирование файла с теорией
-     * @param fileName Имя файла без расширения
+     * @param file Файл для записи. Если не существует, то будет создан
      * @param content Содержимое файла
      * @param key Ключ шифрования
      * @param iv Вектор инициализации
@@ -54,24 +54,24 @@ public class FileManager {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
      */
-    public static void createOrEditLlh(String fileName, String content, SecretKey key, IvParameterSpec iv)
+    public static void createOrEditLlh(File file, String content, SecretKey key, IvParameterSpec iv)
             throws IOException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException {
-        File file = new File(theory.getAbsolutePath() + separator + fileName);
         String encryptedContent = CryptoManager.encrypt(content, key, iv);
+        File fileToWrite;
         if (file.exists())
-            writeFile(file, encryptedContent);
+            fileToWrite = file;
         else {
-            File fileToWrite = new File(theory.getAbsolutePath() + separator + fileName + ".llh");
+            fileToWrite = new File(file.getAbsolutePath() + ".llh");
             fileToWrite.createNewFile();
-            writeFile(fileToWrite, encryptedContent);
         }
+        writeFile(fileToWrite, encryptedContent);
     }
     
     /**
      * Создание или редактирование файла с тестом
-     * @param fileName Имя файла
+     * @param file Файл для записи. Если не существует, то будет создан
      * @param content Содержимое файла
      * @param key Ключ шифрования
      * @param iv Вектор инициализации
@@ -83,24 +83,24 @@ public class FileManager {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
      */
-    public static void createOrEditLle(String fileName, String content, SecretKey key, IvParameterSpec iv)
+    public static void createOrEditLle(File file, String content, SecretKey key, IvParameterSpec iv)
             throws IOException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException {
-        File file = new File(tests.getAbsolutePath() + separator + fileName + ".lle");
         String encryptedContent = CryptoManager.encrypt(content, key, iv);
+        File fileToWrite;
         if (file.exists())
-            writeFile(file, encryptedContent);
+            fileToWrite = file;
         else {
-            File fileToWrite = new File(tests.getAbsolutePath() + separator + fileName + ".lle");
+            fileToWrite = new File(file.getAbsolutePath() + ".lle");
             fileToWrite.createNewFile();
-            writeFile(fileToWrite, encryptedContent);
         }
+        writeFile(fileToWrite, encryptedContent);
     }
     
     /**
      * Чтение файла с теорией
-     * @param fileName Имя файла
+     * @param file Файл для чтения
      * @param key Ключ шифрования
      * @param iv Вектор инициализации
      * @return Считанное и расшифрованное содержимое файла
@@ -112,18 +112,17 @@ public class FileManager {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException 
      */
-    public static String readLlh(String fileName, SecretKey key, IvParameterSpec iv)
+    public static String readLlh(File file, SecretKey key, IvParameterSpec iv)
             throws FileNotFoundException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException {
-        File file = new File(theory.getAbsolutePath() + separator + fileName);
         String content = readFile(file);
         return CryptoManager.decrypt(content, key, iv);
     }
     
     /**
      * Чтение файла с тестом
-     * @param fileName Имя файла без расширения
+     * @param file Файл для чтения
      * @param key Ключ шифрования
      * @param iv Вектор инициализации
      * @return Считанное и расшифрованное содержимое файла
@@ -135,30 +134,27 @@ public class FileManager {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException 
      */
-    public static String readLle(String fileName, SecretKey key, IvParameterSpec iv)
+    public static String readLle(File file, SecretKey key, IvParameterSpec iv)
             throws FileNotFoundException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException {
-        File file = new File(tests.getAbsolutePath() + separator + fileName);
         String content = readFile(file);
         return CryptoManager.decrypt(content, key, iv);
     }
     
     /**
      * Удаление файла с теорией
-     * @param fileName Имя файла для удаления
+     * @param file Файл для удаления
      */
-    public static void removeLlh(String fileName) {
-        File file = new File(theory.getAbsolutePath() + separator + fileName);
+    public static void removeLlh(File file) {
         removeFile(file);
     }
     
     /**
      * Удаление файла с тестом
-     * @param fileName Имя файла для удаления
+     * @param file Файл для удаления
      */
-    public static void removeLle(String fileName) {
-        File file = new File(tests.getAbsolutePath() + separator + fileName);
+    public static void removeLle(File file) {
         removeFile(file);
     }
     
@@ -186,13 +182,12 @@ public class FileManager {
     /**
      * Добавление или изменение изображения
      * @param src Файл-источник изображения
-     * @param fileName Имя создаваемого файла с расширением
+     * @param dest Файл для создания изображения
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public static void addOrReplaceImage(File src, String fileName) throws FileNotFoundException,
+    public static void addOrReplaceImage(File src, File dest) throws FileNotFoundException,
             IOException {
-        File dest = new File(images + separator + fileName);
         copyFile(src, dest);
     }
     
@@ -210,10 +205,9 @@ public class FileManager {
     
     /**
      * Удаление изображения
-     * @param fileName Имя файла для удаления
+     * @param file Файл для удаления
      */
-    public static void removeImage(String fileName) {
-        File file = new File(images + separator + fileName);
+    public static void removeImage(File file) {
         removeFile(file);
     }
     
@@ -361,8 +355,8 @@ public class FileManager {
             FileNotFoundException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException, IOException {
-        String content = readLlh(file.getName(), oldKey, oldIv);
-        createOrEditLlh(file.getName(), content, newKey, newIv);
+        String content = readLlh(file, oldKey, oldIv);
+        createOrEditLlh(file, content, newKey, newIv);
     }
     
     public static void reencryptLle(File file, SecretKey oldKey, SecretKey newKey, IvParameterSpec oldIv,
@@ -370,8 +364,8 @@ public class FileManager {
             FileNotFoundException, NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
             IllegalBlockSizeException, IOException {
-        String content = readLle(file.getName(), oldKey, oldIv);
-        createOrEditLle(file.getName(), content, newKey, newIv);
+        String content = readLle(file, oldKey, oldIv);
+        createOrEditLle(file, content, newKey, newIv);
     }
 
     public static String getSeparator() {

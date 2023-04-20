@@ -69,7 +69,8 @@ public class TheoryController implements Initializable {
     private void processSelection() {
         try {
             String theme = comboBox.getValue();
-            String content = FileManager.readLlh(theme, key, iv);
+            File file = new File(FileManager.getTheory() + FileManager.getSeparator() + theme);
+            String content = FileManager.readLlh(file, key, iv);
             webEngine.loadContent(MarkdownParser.parse(content));
         } catch (FileNotFoundException | NoSuchPaddingException | NoSuchAlgorithmException |
                 InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException |

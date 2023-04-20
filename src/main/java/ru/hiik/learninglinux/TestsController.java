@@ -86,7 +86,8 @@ public class TestsController implements Initializable {
             if (comboBox.getValue() == null)
                 return;
             String theme = comboBox.getValue();
-            buffer = FileManager.readLle(theme, key, iv);
+            File file = new File(FileManager.getTests() + FileManager.getSeparator() + theme);
+            buffer = FileManager.readLle(file, key, iv);
             fileSelector.setVisible(false);
             tester.setVisible(true);
             scanner = new Scanner(buffer);
