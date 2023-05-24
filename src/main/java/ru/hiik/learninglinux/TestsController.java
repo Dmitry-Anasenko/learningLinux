@@ -205,7 +205,12 @@ public class TestsController implements Initializable {
     
     @FXML
     private void cancelTest() {
-        
+        buffer = "";
+        questionsQuantity = 0;
+        correctAnswers = 0;
+        tester.setVisible(false);
+        fileSelector.setVisible(true);
+        comboBox.getSelectionModel().select(-1);
     }
     
     @FXML

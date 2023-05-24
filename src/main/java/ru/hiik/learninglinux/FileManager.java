@@ -213,12 +213,17 @@ public class FileManager {
     
     /**
      * Метод для первого запуска программы (создает файлы по умолчанию)
+     * @return False, если не существуют какие-либо каталоги
      * @throws IOException
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
-    public static void firstRun() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        if ((!theory.exists()) || (!tests.exists()) || (!config.exists())) {
+    public static byte firstRun() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        if ((theory.exists()) && (tests.exists()) && (config.exists())) {
+            // Если каталоги существуют, то никаких действий не производится
+            return 1;
+        }
+        if ((!theory.exists()) && (!tests.exists()) && (!config.exists())) {
             deleteDirectory(theory);
             deleteDirectory(tests);
             config.delete();
@@ -234,7 +239,9 @@ public class FileManager {
             String iv = CryptoManager.convertIvToString(CryptoManager.generateIv());
             String configContent =  key + "\n" + iv;
             writeLlc(configContent);
+            return 0;
         }
+        return 2;
     }
     
     /**
