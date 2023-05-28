@@ -91,7 +91,6 @@ public class PrimaryController implements Initializable {
                                 .convertStringToSecretKey(llcContent[0]), CryptoManager
                                 .convertStringToIv(llcContent[1]));
                         file.delete();
-                        System.out.println(file.getAbsolutePath());
                     }
                     
                     defaultLlhDir.delete();
