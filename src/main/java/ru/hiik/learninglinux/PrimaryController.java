@@ -34,11 +34,12 @@ public class PrimaryController implements Initializable {
             byte code = FileManager.firstRun();
             if (code == 0) {
                 String[] llcContent = FileManager.readLlc();
-                File defaultLlhDir = new File(App.class
-                        .getResource("defaults" + FileManager.getSeparator() + "llhs").getFile());
-                File defaultLleDir = new File(App.class
-                        .getResource("defaults" + FileManager.getSeparator() + "lles").getFile());
-
+                String separator = FileManager.getSeparator();
+                File defaultLlhDir = new File(System.getProperty("user.dir") + separator + "defaults"
+                        + separator + "llhs");
+                File defaultLleDir = new File(System.getProperty("user.dir") + separator + "defaults"
+                        + separator + "lles");
+                
                 if (defaultLlhDir.exists()) {
                     File[] llhs = defaultLlhDir.listFiles(new FilenameFilter() {
                         public boolean accept(File dir, String name) {
@@ -95,8 +96,7 @@ public class PrimaryController implements Initializable {
                     
                     defaultLlhDir.delete();
                     defaultLleDir.delete();
-                    File defaults = new File(App.class
-                        .getResource("defaults").getFile());
+                    File defaults = new File(System.getProperty("user.dir") + separator + "defaults");
                     defaults.delete();
                 }
                 else {
