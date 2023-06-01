@@ -54,7 +54,7 @@ public class TestsController implements Initializable {
     // Количество вопросов
     private int questionsQuantity = 0;
     // Количество правильных ответов. Если ответ частично правильный, то используется дробное число
-    private float correctAnswers = 0;
+    private double correctAnswers = 0;
     
     /**
      * Initializes the controller class.
@@ -159,6 +159,7 @@ public class TestsController implements Initializable {
             fillTester();
         }
         else {
+            correctAnswers = Math.round(correctAnswers * 100.0) / 100.0;
             int mark = 2;
             if ((correctAnswers / questionsQuantity) > 0.5)
                 mark = 3;

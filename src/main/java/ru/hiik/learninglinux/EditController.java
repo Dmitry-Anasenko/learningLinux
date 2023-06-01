@@ -356,6 +356,20 @@ public class EditController extends Thread implements Initializable {
             cb4.setSelected(false);
         }
         else {
+            bufferToWrite += questionField.getText() + "\n" + answer1.getText() + "\n" +
+                answer2.getText() + "\n" + answer3.getText() + "\n" + answer4.getText() + "\n";
+            if (cb1.isSelected())
+                bufferToWrite += "1";
+            if (cb2.isSelected())
+                bufferToWrite += "2";
+            if (cb3.isSelected())
+                bufferToWrite += "3";
+            if (cb4.isSelected())
+                bufferToWrite += "4";
+            cb1.setSelected(false);
+            cb2.setSelected(false);
+            cb3.setSelected(false);
+            cb4.setSelected(false);
             questionField.setText(scanner.nextLine());
             answer1.setText(scanner.nextLine());
             answer2.setText(scanner.nextLine());
@@ -370,6 +384,7 @@ public class EditController extends Thread implements Initializable {
                 cb3.setSelected(true);
             if (correctAnswers.contains("4"))
                cb4.setSelected(true);
+            scanner.nextLine();
         }
     }
     
